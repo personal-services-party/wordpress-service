@@ -1,0 +1,41 @@
+version: "3.0"
+
+services:
+
+  database:
+    image: mysql:8
+    container_name: database_container
+    volumes:
+      - ./mysql/config:/etc/mysql/conf.d/
+      - ./mysql/database:/var/lib/mysql/
+      - ./mysql/entrypoints:/docker-entrypoint-initdb.d/
+      - ./mysql/home:/home/
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: glyz205070410
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: glyz205070410
+    networks:
+      - wordpress_network
+
+  ## https://qiita.com/vc7/items/e88026c75f2280f95ed4
+  wordpress:
+    image: wordpress:latest
+    container_name: wordpress_container
+    ports:
+      - 8000:80
+    restart: always
+    volumes:
+      - ./wordpress:/var/www/html
+    environment:
+      WORDPRESS_DB_HOST: database:3306
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: glyz205070410
+    depends_on:
+      - database
+    networks:
+      - wordpress_network
+
+networks:
+  wordpress_network:
