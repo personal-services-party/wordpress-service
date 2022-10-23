@@ -4,7 +4,7 @@ services:
 
   database:
     image: mysql:8
-    container_name: database_container
+    container_name: wordpress_database_container
     volumes:
       - ./mysql/config:/etc/mysql/conf.d/
       - ./mysql/database:/var/lib/mysql/
