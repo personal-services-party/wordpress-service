@@ -11,6 +11,8 @@ services:
       - ./mysql/entrypoints:/docker-entrypoint-initdb.d/
       - ./mysql/home:/home/
     restart: always
+    ports:
+      - 22306:3306
     environment:
       MYSQL_ROOT_PASSWORD: glyz205070410
       MYSQL_DATABASE: wordpress
@@ -25,6 +27,7 @@ services:
     container_name: wordpress_container
     ports:
       - 8000:80
+      - 8443:443
     restart: always
     volumes:
       - ./wordpress:/var/www/html
